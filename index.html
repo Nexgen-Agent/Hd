@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShootingStar | The System That Builds Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0C0C0C;
+            --primary-gold: #D4AF37;
+            --accent-blue: #00BFFF;
+            --text-light: #F5F5F7;
+            --text-gray: #A1A1A6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --indigo: #4B0082;
+            --deep-indigo: #2D1B69;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.7;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(12, 12, 12, 0.8), rgba(12, 12, 12, 0.4), rgba(12, 12, 12, 0.8));
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+            animation: light-sweep 3s infinite;
+        }
+
+        @keyframes light-sweep {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .subtext {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-blue));
+            color: var(--bg-dark);
+            border: none;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-5px) translateX(-50%);
+            }
+        }
+
+        /* Auto-Scrolling Gallery */
+        .auto-gallery-section {
+            padding: 40px 0 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-gold), var(--accent-blue));
+        }
+
+        .gallery-container {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        .gallery-track {
+            display: flex;
+            gap: 30px;
+            animation: scroll 40s linear infinite;
+        }
+
+        .gallery-item {
+            flex: 0 0 auto;
+            width: 300px;
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-image {
+            opacity: 1;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        .gallery-caption h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .gallery-caption p {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-300px * 6 - 30px * 5));
+            }
+        }
+
+        /* Services & Products Section */
+        .services-section {
+            padding: 100px 0;
+            background: rgba(45, 27, 105, 0.1);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .service-description {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Pricing Popup */
+        .pricing-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pricing-popup.active {
+            display: flex;
+        }
+
+        .popup-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .popup-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 250px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .starter .card-glow {
+            background: radial-gradient(circle at center, var(--accent-blue) 0%, transparent 70%);
+        }
+
+        .pro .card-glow {
+            background: radial-gradient(circle at center, var(--accent-blue) 0%, transparent 70%);
+        }
+
+        .elite .card-glow {
+            background: radial-gradient(circle at center, var(--primary-gold) 0%, transparent 70%);
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tier-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .tier-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--primary-gold);
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            margin-right: 10px;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        .elite .features-list li::before {
+            color: var(--primary-gold);
+        }
+
+        /* Subscription Packages */
+        .subscription-section {
+            padding: 100px 0;
+        }
+
+        .subscription-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .subscription-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.4s ease;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subscription-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .subscription-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .subscription-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .subscription-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-gold);
+        }
+
+        .subscription-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .subscription-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .subscription-features li:last-child {
+            border-bottom: none;
+        }
+
+        .subscription-features li::before {
+            content: '✓';
+            margin-right: 10px;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            padding: 100px 0;
+            background: rgba(45, 27, 105, 0.1);
+        }
+
+        .testimonials-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testimonials-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial-card {
+            min-width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-dark);
+            font-weight: 600;
+        }
+
+        .testimonial-metrics {
+            color: var(--primary-gold);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .testimonial-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--glass-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--primary-gold);
+            transform: scale(1.2);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 191, 255, 0.1));
+            z-index: -1;
+        }
+
+        .cta-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-gold);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-blue));
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-gray);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Sticky CTA Button */
+        .sticky-cta {
+            position: fixed;
+            bottom: 30px;
+            right: 100px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-blue));
+            color: var(--bg-dark);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sticky-cta.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-card {
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 0 15px;
+            }
+
+            .logo {
+                font-size: 3rem;
+            }
+
+            .tagline {
+                font-size: 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subscription-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-title {
+                font-size: 2.5rem;
+            }
+
+            .sticky-cta {
+                right: 20px;
+                bottom: 20px;
+            }
+
+            .back-to-top {
+                right: 20px;
+                bottom: 20px;
+            }
+
+            .gallery-track {
+                animation-duration: 30s;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .service-card {
+                padding: 20px;
+            }
+
+            .subscription-card {
+                padding: 30px 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-card {
+                padding: 25px;
+            }
+
+            .popup-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-bg-video" autoplay muted loop>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-flowing-lights-3537-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="logo">ShootingStar</h1>
+            <p class="tagline">The System That Builds Systems</p>
+            <p class="subtext">A Hybrid Digital Marketing Ecosystem for Businesses That Want to Scale</p>
+            <div class="cta-buttons">
+                <a href="#services" class="btn btn-primary">Explore Services</a>
+                <a href="#" class="btn btn-secondary" id="nexgen-btn">Book a Strategy Call</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down" style="font-size: 1.5rem;"></i>
+        </div>
+    </section>
+
+    <!-- Auto-Scrolling Gallery -->
+    <section class="auto-gallery-section">
+        <div class="container">
+            <div class="gallery-container">
+                <div class="gallery-track">
+                    <!-- Gallery items -->
+                    <div class="gallery-item">
+                        <div class="gallery-image" style="background: linear-gradient(135deg, #6a11cb, #2575fc);"></div>
+                        <div class="gallery-caption">
+                            <h3>Website Design</h3>
+                            <p>Futuristic corporate identity</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);"></div>
+                        <div class="gallery-caption">
+                            <h3>Brand Graphics</h3>
+                            <p>Complete visual identity</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image" style="background: linear-gradient(135deg, #a8ff78, #78ffd6);"></div>
+                        <div class="gallery-caption">
+                            <h3>Video Editing</h3>
+                            <p>Professional video content</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image" style="background: linear-gradient(135deg, #fdbb2d, #22c1c3);"></div>
+                        <div class="gallery-caption">
+                            <h3>Marketing Scripts</h3>
+                            <p>High-converting copywriting</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image" style="background: linear-gradient(135deg, #8e2de2, #4a00e0);"></div>
+                        <div class="gallery-caption">
+                            <h3>Content Calendar</h3>
+                            <p>30-day strategic planning</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image" style="background: linear-gradient(135deg, #f857a6, #ff5858);"></div>
+                        <div class="gallery-caption">
+                            <h3>Ad Campaign Setup</h3>
+                            <p>Multi-platform advertising</p>
+                        </div>
+                    </div>
+                    <!-- Duplicate items for seamless loop -->
+                    <div class="gallery-item">
+                        <div class="gallery-image" style="background: linear-gradient(135deg, #6a11cb, #2575fc);"></div>
+                        <div class="gallery-caption">
+                            <h3>Website Design</h3>
+                            <p>Futuristic corporate identity</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);"></div>
+                        <div class="gallery-caption">
+                            <h3>Brand Graphics</h3>
+                            <p>Complete visual identity</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image" style="background: linear-gradient(135deg, #a8ff78, #78ffd6);"></div>
+                        <div class="gallery-caption">
+                            <h3>Video Editing</h3>
+                            <p>Professional video content</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services & Products Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2 class="section-title">One-Time Power Services</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="service-title">Website Design</h3>
+                    <p class="service-description">Custom websites designed to convert visitors into customers with futuristic aesthetics.</p>
+                    <div class="service-actions">
+                        <button class="btn btn-primary btn-small view-packages" data-service="Website Design">View Packages</button>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="service-title">Brand Graphics</h3>
+                    <p class="service-description">Complete branding package including logo, colors, and brand guidelines.</p>
+                    <div class="service-actions">
+                        <button class="btn btn-primary btn-small view-packages" data-service="Brand Graphics">View Packages</button>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="service-title">Video Editing</h3>
+                    <p class="service-description">Professional video editing for ads, social media, and corporate content.</p>
+                    <div class="service-actions">
+                        <button class="btn btn-primary btn-small view-packages" data-service="Video Editing">View Packages</button>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-scroll"></i>
+                    </div>
+                    <h3 class="service-title">Marketing Scripts</h3>
+                    <p class="service-description">High-converting copywriting for ads, emails, and sales funnels.</p>
+                    <div class="service-actions">
+                        <button class="btn btn-primary btn-small view-packages" data-service="Marketing Scripts">View Packages</button>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="service-title">30-Day Content Calendar</h3>
+                    <p class="service-description">Strategic content planning for a full month of engaging social media.</p>
+                    <div class="service-actions">
+                        <button class="btn btn-primary btn-small view-packages" data-service="30-Day Content Calendar">View Packages</button>
+                    </div>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <h3 class="service-title">Ad Campaign Setup</h3>
+                    <p class="service-description">Multi-platform advertising campaigns optimized for maximum ROI.</p>
+                    <div class="service-actions">
+                        <button class="btn btn-primary btn-small view-packages" data-service="Ad Campaign Setup">View Packages</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Popup -->
+    <div class="pricing-popup" id="pricingPopup">
+        <div class="popup-content">
+            <button class="close-popup" id="closePopup">&times;</button>
+            <h2 class="popup-title" id="popupServiceTitle">Service Packages</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card starter">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <h3 class="tier-name">Starter</h3>
+                        <p class="tier-tagline">Perfect for small businesses</p>
+                        <div class="tier-price">$299</div>
+                    </div>
+                    <ul class="features-list">
+                        <li>Basic website design</li>
+                        <li>5 pages included</li>
+                        <li>Standard branding</li>
+                        <li>1 revision round</li>
+                        <li>7-day delivery</li>
+                    </ul>
+                    <button class="btn btn-primary btn-small purchase-btn">Purchase Now</button>
+                </div>
+                <div class="pricing-card pro">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <h3 class="tier-name">Pro</h3>
+                        <p class="tier-tagline">Ideal for growing brands</p>
+                        <div class="tier-price">$699</div>
+                    </div>
+                    <ul class="features-list">
+                        <li>Advanced website design</li>
+                        <li>10 pages included</li>
+                        <li>Premium branding</li>
+                        <li>3 revision rounds</li>
+                        <li>14-day delivery</li>
+                        <li>SEO optimization</li>
+                    </ul>
+                    <button class="btn btn-primary btn-small purchase-btn">Purchase Now</button>
+                </div>
+                <div class="pricing-card elite">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <h3 class="tier-name">Elite</h3>
+                        <p class="tier-tagline">For enterprise solutions</p>
+                        <div class="tier-price">$1499</div>
+                    </div>
+                    <ul class="features-list">
+                        <li>Custom website design</li>
+                        <li>Unlimited pages</li>
+                        <li>Complete branding system</li>
+                        <li>Unlimited revisions</li>
+                        <li>21-day delivery</li>
+                        <li>Advanced SEO</li>
+                        <li>1-year support</li>
+                    </ul>
+                    <button class="btn btn-primary btn-small purchase-btn">Purchase Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Packages -->
+    <section class="subscription-section">
+        <div class="container">
+            <h2 class="section-title">Growth Systems</h2>
+            <p class="subtext" style="text-align: center; max-width: 700px; margin: 0 auto 50px;">Monthly packages designed to grow your digital presence and scale your revenue.</p>
+            <div class="subscription-grid">
+                <div class="subscription-card fade-in">
+                    <h3 class="subscription-title">Social Growth Plan</h3>
+                    <div class="subscription-price">$499<span style="font-size: 1rem; color: var(--text-gray);">/month</span></div>
+                    <ul class="subscription-features">
+                        <li>Daily social media management</li>
+                        <li>Content creation & scheduling</li>
+                        <li>Community engagement</li>
+                        <li>Monthly performance reports</li>
+                        <li>Basic ad management</li>
+                    </ul>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+                <div class="subscription-card fade-in">
+                    <h3 class="subscription-title">Full Marketing System</h3>
+                    <div class="subscription-price">$999<span style="font-size: 1rem; color: var(--text-gray);">/month</span></div>
+                    <ul class="subscription-features">
+                        <li>All Social Growth features</li>
+                        <li>Email marketing campaigns</li>
+                        <li>SEO optimization</li>
+                        <li>Advanced analytics dashboard</li>
+                        <li>Monthly strategy sessions</li>
+                        <li>Dedicated account manager</li>
+                    </ul>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+                <div class="subscription-card fade-in">
+                    <h3 class="subscription-title">Brand Domination Suite</h3>
+                    <div class="subscription-price">$1999<span style="font-size: 1rem; color: var(--text-gray);">/month</span></div>
+                    <ul class="subscription-features">
+                        <li>All Full Marketing features</li>
+                        <li>Influencer partnerships</li>
+                        <li>PR & media outreach</li>
+                        <li>Competitive analysis</li>
+                        <li>Custom AI content creation</li>
+                        <li>24/7 premium support</li>
+                        <li>Quarterly innovation workshops</li>
+                    </ul>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Client Success Stories</h2>
+            <div class="testimonials-container">
+                <div class="testimonials-track">
+                    <div class="testimonial-card">
+                        <p class="testimonial-content">"ShootingStar transformed our online presence. Our engagement increased by 130% in just two months, and we're seeing real ROI from our marketing spend."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JD</div>
+                            <div>
+                                <h4>John Doe</h4>
+                                <p class="testimonial-metrics">+130% engagement</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-content">"The AI-powered ad campaigns developed by ShootingStar delivered a 240% increase in conversions. Their data-driven approach is a game-changer."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SJ</div>
+                            <div>
+                                <h4>Sarah Johnson</h4>
+                                <p class="testimonial-metrics">+240% conversions</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-content">"From branding to website development, ShootingStar delivered a complete ecosystem that has positioned us as leaders in our industry."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">MR</div>
+                            <div>
+                                <h4>Michael Roberts</h4>
+                                <p class="testimonial-metrics">3x website traffic</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-nav">
+                    <div class="nav-dot active" data-slide="0"></div>
+                    <div class="nav-dot" data-slide="1"></div>
+                    <div class="nav-dot" data-slide="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="container">
+            <h2 class="cta-title">Let's Build the Future of Your Brand</h2>
+            <p class="cta-subtitle">Your AI partner is waiting. Let's transform your digital presence with data-driven strategies and stunning design.</p>
+            <a href="#" class="btn btn-primary" id="final-cta">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ShootingStar</h3>
+                    <p>The System That Builds Systems. AI-Powered Marketing for the modern business.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Digital Marketing</a></li>
+                        <li><a href="#">Branding & Design</a></li>
+                        <li><a href="#">Ad Creation</a></li>
+                        <li><a href="#">Web Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Partners</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Agency Program</a></li>
+                        <li><a href="#">Referral Program</a></li>
+                        <li><a href="#">Become a Partner</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 ShootingStar — Built by Nexgen Intelligence</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Sticky CTA Button -->
+    <div class="sticky-cta" id="stickyCta">
+        <i class="fas fa-robot"></i> Talk to Nexgen
+    </div>
+
+    <script>
+        // Service Filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pricing Popup
+            const pricingPopup = document.getElementById('pricingPopup');
+            const closePopup = document.getElementById('closePopup');
+            const viewPackageButtons = document.querySelectorAll('.view-packages');
+            const popupServiceTitle = document.getElementById('popupServiceTitle');
+            const purchaseButtons = document.querySelectorAll('.purchase-btn');
+
+            viewPackageButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const serviceName = button.getAttribute('data-service');
+                    popupServiceTitle.textContent = `${serviceName} Packages`;
+                    pricingPopup.classList.add('active');
+                });
+            });
+
+            closePopup.addEventListener('click', () => {
+                pricingPopup.classList.remove('active');
+            });
+
+            purchaseButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    alert("Thank you for your interest! Our team will contact you shortly to complete your purchase.");
+                    pricingPopup.classList.remove('active');
+                });
+            });
+
+            // Close popup when clicking outside
+            pricingPopup.addEventListener('click', (e) => {
+                if (e.target === pricingPopup) {
+                    pricingPopup.classList.remove('active');
+                }
+            });
+
+            // Testimonial Carousel
+            const track = document.querySelector('.testimonials-track');
+            const dots = document.querySelectorAll('.nav-dot');
+            let currentSlide = 0;
+
+            function goToSlide(slideIndex) {
+                track.style.transform = `translateX(-${slideIndex * 100}%)`;
+                currentSlide = slideIndex;
+
+                // Update dots
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === slideIndex);
+                });
+            }
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const slideIndex = parseInt(this.getAttribute('data-slide'));
+                    goToSlide(slideIndex);
+                });
+            });
+
+            // Auto-advance testimonials
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % dots.length;
+                goToSlide(currentSlide);
+            }, 5000);
+
+            // Back to Top Button
+            const backToTopButton = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Sticky CTA Button
+            const stickyCta = document.getElementById('stickyCta');
+
+            window.addEventListener('scroll', () => {
+                const scrollPercentage = (window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100;
+
+                if (scrollPercentage > 70) {
+                    stickyCta.classList.add('visible');
+                } else {
+                    stickyCta.classList.remove('visible');
+                }
+            });
+
+            // Nexgen Button Handler
+            const nexgenButtons = document.querySelectorAll('#nexgen-btn, #final-cta, #stickyCta');
+
+            nexgenButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert("Nexgen AI Assistant is coming soon! This feature will allow you to chat with our AI to get personalized recommendations for your business.");
+                });
+            });
+
+            // Scroll Animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            function checkScroll() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', checkScroll);
+            checkScroll(); // Check on page load
+        });
+    </script>
+</body>
+</html>
